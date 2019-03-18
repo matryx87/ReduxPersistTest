@@ -42,19 +42,30 @@ class Login extends Component {
 
   // Confronta lo store di redux (nextProps) che ho mappato // chiamato dal componente durante il ciclo di vita del componente stesso ogni volta che cambia una prop (è nel ciclo di vita non c entra con redux)
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log("getDerivedStateFromProps", prevState.login, nextProps.login);
+    console.log(
+      " %c getDerivedStateFromProps",
+      "color: purple; font-weight: bold"
+    );
+    console.log("prevState: ", prevState, "nextProps: ", nextProps);
 
     if (nextProps.pippo != prevState.pippo) {
       return { ...prevState, pippo: nextProps.pippo }; //copiami lo stato e modifica solo l attributo pippo
+      // return nextProps.pippo;
     }
-    console.log("BOOL", prevState.login != nextProps.login ? true : false);
     if (nextProps.login != prevState.login) {
-      console.log("BOOL", prevState.login != nextProps.login ? true : false);
-      console.log("return:", { ...prevState, login: nextProps.login });
       return { ...prevState, login: nextProps.login };
+      // return nextProps.login;
     }
 
     return { ...prevState };
+  }
+
+  static shouldComponentUpdate(nextProps, nextState) {
+    console.log(
+      " %c shouldComponentUpdate",
+      "color: blue; font-weight: bold"
+    );
+    console.log("prevState: ", nextProps, "nextProps: ", nextState);
   }
 
   handleEmailSubmit = email => {
@@ -125,17 +136,21 @@ const styles = StyleSheet.create({
 
 // funzione che prende lo store redux e permette di estrarne le info che mi servono e le fa diventare prop (pippo diventa una prop ) che uso nel getDerivedState
 const mapStateToProps = state => {
-  console.log("mapStateToProps", state);
-
+  console.log(" %c mapStateToProps", "color: orange; font-weight: bold");
+  console.log("state: ", state);
+  console.log("return: ", {
+    pippo: state.pippo,
+    login: state.login
+  });
   return {
     pippo: state.pippo,
-    login: state.login,
-    email: state.login.email,
-    password: state.login.password
+    login: state.login
   };
 };
 
 const mapDispatchToProps = dispatch => {
+  console.log(" %c mapDispatchToProps", "color: orange; font-weight: bold");
+
   return {
     increment: () => dispatch(increment()),
     decrement: () => dispatch(decrement()),

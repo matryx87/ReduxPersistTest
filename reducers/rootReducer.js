@@ -1,11 +1,10 @@
 import { combineReducers } from "redux";
 
-import defaultReducer, { pippoReducer, loginReducer } from "./reducers";
+import { pippoReducer, loginReducer } from "./reducers";
 
 const rootReducer = combineReducers({
-  defaultReducer,
-  pippoReducer,
-  loginReducer
+  pippo: pippoReducer,
+  login: loginReducer
 });
 
 export default rootReducer;

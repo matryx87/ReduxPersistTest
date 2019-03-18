@@ -7,58 +7,44 @@ import {
 
 import initialState from "../initialState.js";
 
-export const pippoReducer = (state = initialState, action) => {
+export const pippoReducer = (state = initialState.pippo, action) => {
   switch (action.type) {
     case INCREMENT:
-      return { ...state, pippo: state.pippo + 1 };
+    //   return { ...state, pippo: state.pippo + 1 };
+    return state + 1
 
     case DECREMENT:
-      return { ...state, pippo: state.pippo - 1 };
-
-    case ADD_EMAIL:
-      const newMailState = { ...state };
-
-      const mailLogin = { ...state.login };
-      mailLogin.email = action.payload;
-
-      newMailState.login = { ...mailLogin };
-      return newMailState;
-
-    case ADD_PASSWORD:
-      const newPasswordState = { ...state };
-
-      const passwordLogin = { ...state.login };
-      passwordLogin.password = action.payload;
-
-      newPasswordState.login = { ...passwordLogin };
-      return newPasswordState;
+    //   return { ...state, pippo: state.pippo - 1 };
+      return state - 1
 
     default:
       return state;
   }
 };
 
-export const loginReducer = (state = initialState, action) => {
+export const loginReducer = (state = initialState.login, action) => {
   const newState = { ...state };
 
   switch (action.type) {
     case ADD_EMAIL:
-      const mailLogin = newState.login;
-      mailLogin.email = action.payload;
+    //   const mailLogin = newState.login;
+    //   mailLogin.email = action.payload;
 
-      newState.login = mailLogin;
-      return newState;
+    //   newState.login = mailLogin;
+    //   return newState;
+      return { ...state, email: action.payload };
+
 
     case ADD_PASSWORD:
-      const passwordLogin = { ...state.login };
-      passwordLogin.password = action.payload;
+    //   const passwordLogin = { ...state.login };
+    //   passwordLogin.password = action.payload;
 
-      newState.login = { ...passwordLogin };
-      return newState;
+    //   newState.login = { ...passwordLogin };
+    //   return newState;
+      return { ...state, password: action.payload };
+
 
     default:
       return state;
   }
 };
-
-export default (defaultReducer = (state = initialState, action) => state);

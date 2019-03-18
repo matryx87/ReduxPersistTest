@@ -7,7 +7,7 @@ import storage from "redux-persist/lib/storage";
 
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 
-import { pippoReducer, loginReducer } from "./reducers/reducers";
+// import { pippoReducer, loginReducer } from "./reducers/reducers";
 
 import rootReducer from "./reducers/rootReducer";
 
@@ -17,9 +17,17 @@ const persistConfig = {
   stateReconciler: autoMergeLevel2
 };
 
-const pReducer = persistReducer(persistConfig, pippoReducer);
+const pReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = createStore(pReducer, applyMiddleware(logger), autoRehydrate);
-console.log("GET STATE: ", store.getState())
+export const store = createStore(
+  pReducer,
+  applyMiddleware(logger),
+  autoRehydrate
+);
+console.log(
+  "%c GET STATE: ",
+  "color: green; font-weight: bold",
+  store.getState()
+);
 
 export const persistor = persistStore(store);
