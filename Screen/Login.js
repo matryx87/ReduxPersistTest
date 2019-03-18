@@ -42,15 +42,15 @@ class Login extends Component {
 
   // Confronta lo store di redux (nextProps) che ho mappato // chiamato dal componente durante il ciclo di vita del componente stesso ogni volta che cambia una prop (è nel ciclo di vita non c entra con redux)
   static getDerivedStateFromProps(nextProps, prevState) {
-
-    console.log("getDerivedStateFromProps", prevState, nextProps);
+    console.log("getDerivedStateFromProps", prevState.login, nextProps.login);
 
     if (nextProps.pippo != prevState.pippo) {
       return { ...prevState, pippo: nextProps.pippo }; //copiami lo stato e modifica solo l attributo pippo
     }
-    
+    console.log("BOOL", prevState.login != nextProps.login ? true : false);
     if (nextProps.login != prevState.login) {
-      console.log("return:", { ...prevState, login: nextProps.login })
+      console.log("BOOL", prevState.login != nextProps.login ? true : false);
+      console.log("return:", { ...prevState, login: nextProps.login });
       return { ...prevState, login: nextProps.login };
     }
 

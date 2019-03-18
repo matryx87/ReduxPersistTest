@@ -7,7 +7,7 @@ import {
 
 import initialState from "../initialState.js";
 
-const pippoReducer = (state = initialState, action) => {
+export const pippoReducer = (state = initialState, action) => {
   switch (action.type) {
     case INCREMENT:
       return { ...state, pippo: state.pippo + 1 };
@@ -38,4 +38,27 @@ const pippoReducer = (state = initialState, action) => {
   }
 };
 
-export default pippoReducer;
+export const loginReducer = (state = initialState, action) => {
+  const newState = { ...state };
+
+  switch (action.type) {
+    case ADD_EMAIL:
+      const mailLogin = newState.login;
+      mailLogin.email = action.payload;
+
+      newState.login = mailLogin;
+      return newState;
+
+    case ADD_PASSWORD:
+      const passwordLogin = { ...state.login };
+      passwordLogin.password = action.payload;
+
+      newState.login = { ...passwordLogin };
+      return newState;
+
+    default:
+      return state;
+  }
+};
+
+export default (defaultReducer = (state = initialState, action) => state);
