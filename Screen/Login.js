@@ -50,21 +50,26 @@ class Login extends Component {
 
     if (nextProps.pippo != prevState.pippo) {
       return { ...prevState, pippo: nextProps.pippo }; //copiami lo stato e modifica solo l attributo pippo
-      // return nextProps.pippo;
     }
     if (nextProps.login != prevState.login) {
+      console.log("ENTERED");
       return { ...prevState, login: nextProps.login };
-      // return nextProps.login;
     }
 
     return { ...prevState };
+
+    // switch (nextProps != prevState) {
+    //   case nextProps.pippo != prevState.pippo:
+    //     return { ...prevState, pippo: nextProps.pippo };
+    //   case nextProps.login != prevState.login:
+    //     return { ...prevState, login: nextProps.login };
+    //   default:
+    //     return { ...prevState };
+    // }
   }
 
   static shouldComponentUpdate(nextProps, nextState) {
-    console.log(
-      " %c shouldComponentUpdate",
-      "color: blue; font-weight: bold"
-    );
+    console.log(" %c shouldComponentUpdate", "color: blue; font-weight: bold");
     console.log("prevState: ", nextProps, "nextProps: ", nextState);
   }
 
