@@ -20,16 +20,13 @@ export default class Home extends Component {
     title: "Home"
   };
 
-  // constructor() {
-  //   super();
-
-  //   this.Animation = new Animated.Value(0);
-  // }
-
   state = {
     height: new Animated.Value(100),
     width: new Animated.Value(100),
-    color: new Animated.Value(0)
+    color: new Animated.Value(0),
+    opacity: new Animated.Value(0),
+    position: new Animated.ValueXY({ x: -100, y: 0 }),
+    degrees: new Animated.Value(0)
   };
 
   startAnimation = () => {
@@ -39,7 +36,7 @@ export default class Home extends Component {
     height.setValue(100);
     width.setValue(100);
 
-    // Start a spring animation
+    // Animazione di Animated.Value (height)
     Animated.spring(height, { toValue: 300, friction: 0.8 }).start();
     Animated.spring(width, { toValue: 300, friction: 0.8 }).start();
   };
@@ -47,12 +44,36 @@ export default class Home extends Component {
   startColorAnimation = () => {
     const { color } = this.state;
 
+    // Reset the value if needed
     color.setValue(0);
 
-    Animated.timing(color, {
-      toValue: 1,
-      duration: 3333
-    }).start();
+    // Animazione di Animated.Value (color) - duration in ms
+    Animated.timing(color, { toValue: 1, duration: 2000 }).start();
+  };
+
+  startFadingAnimation = () => {
+    const { opacity } = this.state;
+
+    // Reset the value if needed
+    opacity.setValue(0);
+
+    // Animazione di Animated.Value (opacity) - duration in ms
+    Animated.timing(opacity, { toValue: 1, duration: 2000 }).start();
+  };
+
+  startComposedAnimation = () => {
+    const { position, degrees } = this.state;
+
+    position.setValue({ x: -100, y: 0 });
+    degrees.setValue(0);
+
+    Animated.sequence([
+      Animated.parallel([
+        Animated.spring(position, { toValue: { x: 100, y: 0 } }),
+        Animated.timing(degrees, { toValue: 1, duration: 500 })
+      ]),
+      Animated.spring(position, { toValue: { x: 100, y: 110 } })
+    ]).start(); // start the sequence group
   };
 
   // componentDidMount() {
@@ -60,8 +81,7 @@ export default class Home extends Component {
   // }
 
   render() {
-    const { height, width } = this.state;
-    const { color } = this.state;
+    const { height, width, color, opacity, position, degrees } = this.state;
 
     const backgroundColorConfig = color.interpolate({
       // inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1],
@@ -69,6 +89,11 @@ export default class Home extends Component {
 
       inputRange: [0, 1],
       outputRange: ["blue", "red"]
+    });
+
+    const spinConfig = degrees.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["0deg", "360deg"]
     });
 
     return (
@@ -88,11 +113,29 @@ export default class Home extends Component {
         </AnimatedTouchableOpacity>
 
         <Button
-          title="Animate View"
+          title="Change View Color"
           onPress={() => this.startColorAnimation()}
         />
         <AnimatedView
           style={[styles.view, { backgroundColor: backgroundColorConfig }]}
+        />
+
+        <Button
+          title="Change View Opacity"
+          onPress={() => this.startFadingAnimation()}
+        />
+        <AnimatedView style={[styles.view, { opacity: opacity }]} />
+
+        <Button
+          title="Composed View Animation"
+          onPress={() => this.startComposedAnimation()}
+        />
+        <AnimatedView
+          style={[
+            styles.view,
+            position.getLayout(),
+            { transform: [{ rotate: spinConfig }] }
+          ]}
         />
       </View>
     );
@@ -116,6 +159,7 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   view: {
+    backgroundColor: "black",
     height: 100,
     width: 100
   }
