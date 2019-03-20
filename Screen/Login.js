@@ -48,24 +48,27 @@ class Login extends Component {
     );
     console.log("prevState: ", prevState, "nextProps: ", nextProps);
 
-    if (nextProps.pippo != prevState.pippo) {
-      return { ...prevState, pippo: nextProps.pippo }; //copiami lo stato e modifica solo l attributo pippo
-    }
-    if (nextProps.login != prevState.login) {
-      console.log("ENTERED");
-      return { ...prevState, login: nextProps.login };
-    }
-
-    return { ...prevState };
-
-    // switch (nextProps != prevState) {
-    //   case nextProps.pippo != prevState.pippo:
-    //     return { ...prevState, pippo: nextProps.pippo };
-    //   case nextProps.login != prevState.login:
-    //     return { ...prevState, login: nextProps.login };
-    //   default:
-    //     return { ...prevState };
+    // if (nextProps.pippo != prevState.pippo) {
+    //   return { ...prevState, pippo: nextProps.pippo }; //copiami lo stato e modifica solo l attributo pippo
     // }
+    // if (nextProps.login != prevState.login) {
+    //   console.log("ENTERED");
+    //   return { ...prevState, login: nextProps.login };
+    // }
+
+    // return { ...prevState };
+
+    var derivedState = { ...prevState };
+
+    if (nextProps.pippo != prevState.pippo) {
+      derivedState = { ...derivedState, pippo: nextProps.pippo };
+    }
+    
+    if (nextProps.login != prevState.login) {
+      derivedState = { ...derivedState, login: nextProps.login };
+    }
+
+    return derivedState
   }
 
   static shouldComponentUpdate(nextProps, nextState) {
