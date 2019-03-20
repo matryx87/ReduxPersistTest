@@ -5,7 +5,8 @@ import {
   Text,
   Button,
   TouchableOpacity,
-  Animated
+  Animated,
+  ScrollView
 } from "react-native";
 
 // Wrap a component to make it animatable
@@ -99,44 +100,45 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <Text>Home Screen</Text>
+        <ScrollView>
+          <Button
+            title="Go to SecondView"
+            onPress={() => this.props.navigation.navigate("SecondView")} // Torna alla Home (o a qualsiasi altro screen dello stack)
+          />
 
-        <Button
-          title="Go to SecondView"
-          onPress={() => this.props.navigation.navigate("SecondView")} // Torna alla Home (o a qualsiasi altro screen dello stack)
-        />
+          <AnimatedTouchableOpacity
+            onPress={this.startAnimation}
+            style={[styles.button, { height, width }]}
+          >
+            <Text style={styles.text}>Tap Me</Text>
+          </AnimatedTouchableOpacity>
 
-        <AnimatedTouchableOpacity
-          onPress={this.startAnimation}
-          style={[styles.button, { height, width }]}
-        >
-          <Text style={styles.text}>Tap Me</Text>
-        </AnimatedTouchableOpacity>
+          <Button
+            title="Change View Color"
+            onPress={() => this.startColorAnimation()}
+          />
+          <AnimatedView
+            style={[styles.view, { backgroundColor: backgroundColorConfig }]}
+          />
 
-        <Button
-          title="Change View Color"
-          onPress={() => this.startColorAnimation()}
-        />
-        <AnimatedView
-          style={[styles.view, { backgroundColor: backgroundColorConfig }]}
-        />
+          <Button
+            title="Change View Opacity"
+            onPress={() => this.startFadingAnimation()}
+          />
+          <AnimatedView style={[styles.view, { opacity: opacity }]} />
 
-        <Button
-          title="Change View Opacity"
-          onPress={() => this.startFadingAnimation()}
-        />
-        <AnimatedView style={[styles.view, { opacity: opacity }]} />
-
-        <Button
-          title="Composed View Animation"
-          onPress={() => this.startComposedAnimation()}
-        />
-        <AnimatedView
-          style={[
-            styles.view,
-            position.getLayout(),
-            { transform: [{ rotate: spinConfig }] }
-          ]}
-        />
+          <Button
+            title="Composed View Animation"
+            onPress={() => this.startComposedAnimation()}
+          />
+          <AnimatedView
+            style={[
+              styles.view,
+              position.getLayout(),
+              { transform: [{ rotate: spinConfig }] }
+            ]}
+          />
+        </ScrollView>
       </View>
     );
   }

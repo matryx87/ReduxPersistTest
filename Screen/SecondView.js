@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Picker, DatePickerIOS } from "react-native";
+import { View, Text, Picker, DatePickerIOS, Button } from "react-native";
 
 export default class SecondView extends Component {
   //______________________________________
@@ -30,6 +30,11 @@ export default class SecondView extends Component {
         <View style={{ flex: 1, alignItems: "center" }}>
           <Text>SecondView Screen</Text>
         </View>
+
+        <Button
+          title="Go to MapView"
+          onPress={() => this.props.navigation.navigate("MapView")}
+        />
 
         <DatePickerIOS
           mode="date" //date, time, datetime
