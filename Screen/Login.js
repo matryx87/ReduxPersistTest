@@ -97,11 +97,6 @@ class Login extends Component {
         <Text style={styles.instructions}> {this.state.login.email} </Text>
         <Text style={styles.instructions}> {this.state.login.password} </Text>
 
-        <Button
-          title="Login"
-          onPress={() => this.props.navigation.navigate("Home")}
-        />
-
         <CustomButton
           text="Login"
           onPress={() => this.props.navigation.navigate("Home")}
